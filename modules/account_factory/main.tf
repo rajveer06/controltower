@@ -1,35 +1,28 @@
 resource "aws_servicecatalog_provisioned_product" "account" {
-  for_each = toset(var.accounts)
+  for_each = var.accounts
 
-  name                        = "ct-${lower(each.value)}"
-  product_id                  = var.product_id
-  provisioning_artifact_id    = var.provisioning_artifact_id
-  dynamic "provisioning_parameters" {
-    for_each = [
-      {
-        key   = "AccountName"
-        value = each.value
-      },
-      {
-        key   = "SSOUserEmail"
-        value = "user+${lower(each.value)}@example.com"
-      },
-      {
-        key   = "SSOUserFirstName"
-        value = each.value
-      },
-      {
-        key   = "SSOUserLastName"
-        value = "Admin"
-      },
-      {
-        key   = "ManagedOrganizationalUnit"
-        value = var.ou_id
-      }
-    ]
-    content {
-      key   = provisioning_parameters.value.key
-      value = provisioning_parameters.value.value
-    }
+  name                      = "ct-${lower(each.key)}"
+  product_id                = var.product_id
+  provisioning_artifact_id = var.provisioning_artifact_id
+
+  provisioning_parameters {
+    key   = "AccountName"
+    value = each.key
+  }
+  provisioning_parameters {
+    key   = "SSOUserEmail"
+    value = each.value.email
+  }
+  provisioning_parameters {
+    key   = "SSOUserFirstName"
+    value = each.value.first_name
+  }
+  provisioning_parameters {
+    key   = "SSOUserLastName"
+    value = each.value.last_name
+  }
+  provisioning_parameters {
+    key   = "ManagedOrganizationalUnit"
+    value = var.ou_id
   }
 }

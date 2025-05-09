@@ -4,9 +4,13 @@ variable "ou_id" {
 }
 
 variable "accounts" {
-  type        = list(string)
-  description = "List of account names to create under this OU."
+  type = map(object({
+    email      = string
+    first_name = string
+    last_name  = string
+  }))
 }
+
 
 variable "product_id" {
   type        = string

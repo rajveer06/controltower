@@ -19,7 +19,5 @@ variable "org_structure" {
   default = {
     "Non-Prod" = ["Dev", "Stage", "Test"]
     "Prod"     = ["Prod-US", "Prod-India"]
-    "Shared"   = ["Shared-Services"]
-    "Security" = ["Audit", "Log-Archive"]
   }
 }
