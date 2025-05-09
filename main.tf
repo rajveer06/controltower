@@ -19,7 +19,18 @@ module "account_factory" {
     ou_id    = module.organizational_units[ou].ou_id
   }}
 
-  source    = "./modules/account_factory"
-  ou_id     = each.value.ou_id
-  accounts  = each.value.accounts
+  source                   = "./modules/account_factory"
+  ou_id                    = each.value.ou_id
+  accounts                 = each.value.accounts
+  product_id               = data.aws_servicecatalog_product.account_factory.id
+  provisioning_artifact_id   = data.aws_servicecatalog_provisioning_artifact.account_factory_latest.id
 }
+
+data "aws_servicecatalog_product" "account_factory" {
+  id = "prod-abc123" # Replace "prod-abc123" with the actual product ID
+}
+
+data "aws_servicecatalog_provisioning_artifact" "account_factory_latest" {
+  product_id = data.aws_servicecatalog_product.account_factory.id
+}
+

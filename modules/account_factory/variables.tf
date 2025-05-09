@@ -10,5 +10,11 @@ variable "accounts" {
 
 variable "product_id" {
   type        = string
-  description = "Service Catalog Product ID for Account Factory."
+  description = "Service Catalog product ID for AWS Control Tower Account Factory"
 }
+
+variable "provisioning_artifact_id" {
+  type        = string
+  description = "Provisioning artifact ID for the Account Factory product"
+}
+
