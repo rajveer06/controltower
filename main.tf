@@ -14,14 +14,16 @@ module "organizational_units" {
 
 # Create accounts using Service Catalog Account Factory
 module "account_factory" {
-  for_each = { for ou, accounts in var.org_structure : ou => {
-    accounts = accounts
-    ou_id    = module.organizational_units[ou].ou_id
-  }}
+  for_each = {
+    for ou, accounts in var.org_structure : ou => {
+      accounts = accounts
+      ou_id    = module.organizational_units[ou].ou_id
+    }
+  }
 
   source                   = "./modules/account_factory"
-  ou_id                    = each.value.ou_id
   accounts                 = each.value.accounts
+  ou_id                    = each.value.ou_id
   product_id               = var.product_id
   provisioning_artifact_id = var.provisioning_artifact_id
 }

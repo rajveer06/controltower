@@ -15,9 +15,11 @@ variable "provisioning_artifact_id" {
 
 
 variable "org_structure" {
-  type = map(list(string))
-  default = {
-    "Non-Prod" = ["Dev", "Stage", "Test"]
-    "Prod"     = ["Prod-US", "Prod-India"]
-  }
+  description = "Organizational structure with account metadata per OU"
+  type = map(map(object({
+    email      = string
+    first_name = string
+    last_name  = string
+  })))
 }
+
