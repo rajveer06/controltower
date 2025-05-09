@@ -12,8 +12,3 @@ variable "org_structure" {
     "Security" = ["Audit", "Log-Archive"]
   }
 }
-
-variable "product_id" {
-  description = "The product ID for the Service Catalog Account Factory"
-  type        = string
-}
