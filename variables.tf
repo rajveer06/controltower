@@ -3,6 +3,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "product_id" {
+  description = "The product ID for the Service Catalog Account Factory"
+  type        = string
+}
+
 variable "org_structure" {
   type = map(list(string))
   default = {
