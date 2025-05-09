@@ -4,9 +4,15 @@ variable "region" {
 }
 
 variable "product_id" {
-  description = "The product ID for the Service Catalog Account Factory"
   type        = string
+  description = "Service Catalog product ID"
 }
+
+variable "provisioning_artifact_id" {
+  type        = string
+  description = "Provisioning artifact ID for Account Factory"
+}
+
 
 variable "org_structure" {
   type = map(list(string))
