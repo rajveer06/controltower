@@ -1,9 +1,9 @@
 resource "aws_servicecatalog_provisioned_product" "account" {
   for_each = toset(var.accounts)
 
-  name              = "ct-${lower(each.value)}"
-  product_id        = data.aws_servicecatalog_product.account_factory.id
-  provisioning_artifact_id = data.aws_servicecatalog_provisioning_artifact.account_factory_latest.id
+  name                        = "ct-${lower(each.value)}"
+  product_id                  = var.product_id
+  provisioning_artifact_id    = var.provisioning_artifact_id
   dynamic "provisioning_parameters" {
     for_each = [
       {
@@ -11,28 +11,20 @@ resource "aws_servicecatalog_provisioned_product" "account" {
         value = each.value
       },
       {
-        key   = "Email"
-        value = "${lower(each.value)}@gmail.com"
-      },
-      {
         key   = "SSOUserEmail"
-        value = "${lower(each.value)}@gmail.com"
+        value = "user+${lower(each.value)}@example.com"
       },
       {
         key   = "SSOUserFirstName"
-        value = "First"
+        value = each.value
       },
       {
         key   = "SSOUserLastName"
-        value = "Last"
+        value = "Admin"
       },
       {
         key   = "ManagedOrganizationalUnit"
         value = var.ou_id
-      },
-      {
-        key   = "AccountType"
-        value = "Standard"
       }
     ]
     content {
@@ -40,17 +32,4 @@ resource "aws_servicecatalog_provisioned_product" "account" {
       value = provisioning_parameters.value.value
     }
   }
-  tags = {
-    Environment = "ControlTower"
-  }
-}
-
-data "aws_servicecatalog_product" "account_factory" {
-  name = "AWS Control Tower Account Factory"
-  id   = var.product_id
-}
-
-data "aws_servicecatalog_provisioning_artifact" "account_factory_latest" {
-  product_id = data.aws_servicecatalog_product.account_factory.id
-  depends_on = [data.aws_servicecatalog_product.account_factory]
 }
