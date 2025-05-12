@@ -33,3 +33,14 @@ org_structure = {
     }
   }
 }
+
+management_account_id = "123456789012"  # Replace with the actual AWS management account ID
+
+accounts = [
+  "Dev",
+  "Stage",
+  "Test",
+  "Prod-US",
+  "Prod-India"
+]
+

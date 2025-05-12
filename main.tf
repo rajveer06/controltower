@@ -28,4 +28,12 @@ module "account_factory" {
   provisioning_artifact_id = var.provisioning_artifact_id
 }
 
+module "cross_account_role" {
+  source = "./modules/cross_account_role"  # Path to the cross_account_role module
+  
+  management_account_id = var.management_account_id  # Reference the variable defined in terraform.tfvars
+  accounts             = var.accounts  # Reference the variable defined in terraform.tfvars
+}
+
+
 
